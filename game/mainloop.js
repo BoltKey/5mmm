@@ -25,10 +25,18 @@ function mainloop() {
 		checkkeys();
 		
 		if (inplay) {
+			updateSeconds();
 			//gameframe();
 		}
 		lastmd = mouseDown;
 		lastkd = JSON.parse(JSON.stringify(keysDown));
 	}
 	draw();
+}
+
+function updateSeconds() {
+	if (seconds * 1000 < now - startTime) {
+		++seconds;
+		income();
+	}
 }

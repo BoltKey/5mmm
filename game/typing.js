@@ -30,7 +30,7 @@ function Typer() {
 			this.letters.splice(this.amt - 1, 1);
 			this.letters = [this.alphabet[Math.floor(Math.random() * 26)]].concat(this.letters);
 			this.offset += this.w / this.amt;
-			texts.push(new floatText("+" + this.reward, this.x + this.w / 2 - 10 + (Math.floor(Math.random() * 20)), this.y - 20, "rgba(0, 255, 0, "));
+			texts.push(new floatText("+" + this.reward, this.x + this.w / 2 - 10 + (Math.floor(Math.random() * 20)), this.y - 40, "rgba(0, 255, 0, "));
 		}
 		else {
 			resources.red -= this.penalty;

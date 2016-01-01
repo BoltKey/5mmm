@@ -11,7 +11,12 @@ var mouseDown;
 var lastmd;
 var texts = [];
 var resources = {red: 0, green: 0, blue: 0, black: 0};
-var inplay = true;
+var production = {red: 0, green: 0, blue: 0, black: 0};
+var vp = 0;
+var seconds;
+var startTime;
+var COLORS = ["red", "green", "blue", "black"];
+var inplay = false;
 function main() {
 	//objects
 	wam = new Whackamole();
@@ -22,16 +27,20 @@ function main() {
 	dm.newSet();
 	ep = new EightPuzzle();
 	ep.newSet();
+	cm = new CardManager();
+	cm.newSet();
+	
 	//canvas
 	canvas = $("#game")[0];
 	ctx = canvas.getContext("2d");
 	ctx.fillRect(10, 10, 10, 10);
+	
 	//mouse
 	var offset = $("#game").offset();
 	$(document).mousemove(function(e){
     divPos = {
-        x: e.pageX - offset.left,
-        y: e.pageY - offset.top
+        x: e.pageX - offset.top,
+        y: e.pageY - offset.left
 		}
 	})
 	lastDivPos = {x: 0, y: 0};
@@ -45,7 +54,7 @@ function main() {
 		--mouseDown;
 	}
 	
-		//keyboard
+	//keyboard
 	keysDown = [];
 	lastkd = [];
 	$(document).keydown(function(ev) { 
@@ -66,6 +75,20 @@ function main() {
 	fpshistory = [];
 	interval = 1000/fps;
 	
+	start();
+	
 	mainloop();
+}
+
+function start() {
+	inplay = true;
+	startTime = Date.now();
+	seconds = 0;
+}
+
+function income() {
+	for (k of COLORS) {
+		resources[k] += production[k];
+	}
 }
 window.onload = main;

@@ -1,14 +1,14 @@
 function EightPuzzle() {
 	
 	this.x = 750;
-	this.y = 240;
+	this.y = 420;
 	this.w = 180;
 	this.padding = 3;
 	this.reward = 250;
 	this.inverted = false;
 	
 	this.doMove = function(direction) {
-		// 0 left, 1 up, 2 right, 3 down //0 right, 1 down, 2 left, 3 up leftupright
+		// 0 left, 1 up, 2 right, 3 down 
 		var free = this.tiles.indexOf(9);
 		// edge of the board
 		if (direction === 2 && free % 3 === 2 ||

@@ -7,4 +7,4 @@ whack-a-mole
 
 cards, 3 to choose from. Random each time (with time better etc.)
 
-color coded - production (green), minigames (magenta), victory points (yellow / gold / silver), special (gray)
+color coded - production (green), minigames (red), victory points (silver), special (dark gray), trade (yellow)
