@@ -5,6 +5,7 @@ function Whackamole() {
 	this.x = 740;
 	this.h = 140;
 	this.w = 200;
+	this.mlg = 0;
 	texts = [];
 	this.target = this.target = [5 + Math.floor(Math.random() * (this.w - 10)), 5 + Math.floor(Math.random() * (this.h - 10))];
 	this.click = function(x, y) {
@@ -15,6 +16,7 @@ function Whackamole() {
 		if (change > 13) {
 			text = "PERFECT!!!";
 			color += "0,10,100,";
+			vp += this.mlg * 5;
 		}
 		else if (change > 9) {
 			text = "Excellent!!";

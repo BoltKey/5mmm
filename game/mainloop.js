@@ -30,13 +30,17 @@ function mainloop() {
 		}
 		lastmd = mouseDown;
 		lastkd = JSON.parse(JSON.stringify(keysDown));
+		draw();
 	}
-	draw();
+	
 }
 
 function updateSeconds() {
 	if (seconds * 1000 < now - startTime) {
 		++seconds;
+		if (seconds >= 300) {
+			endGame();
+		}
 		income();
 	}
 }

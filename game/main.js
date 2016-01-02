@@ -9,26 +9,19 @@ var keysDown;
 var lastkd;
 var mouseDown;
 var lastmd;
+var resources;
+var production;
 var texts = [];
-var resources = {red: 0, green: 0, blue: 0, black: 0};
-var production = {red: 0, green: 0, blue: 0, black: 0};
+
 var vp = 0;
+var vpps = 0;
 var seconds;
 var startTime;
 var COLORS = ["red", "green", "blue", "black"];
 var inplay = false;
+var showResult = false;
 function main() {
-	//objects
-	wam = new Whackamole();
-	//fl = new FindLetter();
-	typer = new Typer();
-	//fl.newSet();
-	dm = new DigitMemo();
-	dm.newSet();
-	ep = new EightPuzzle();
-	ep.newSet();
-	cm = new CardManager();
-	cm.newSet();
+	
 	
 	//canvas
 	canvas = $("#game")[0];
@@ -81,9 +74,29 @@ function main() {
 }
 
 function start() {
+	//objects
+	wam = new Whackamole();
+	//fl = new FindLetter();
+	typer = new Typer();
+	//fl.newSet();
+	dm = new DigitMemo();
+	dm.newSet();
+	ep = new EightPuzzle();
+	ep.newSet();
+	cm = new CardManager();
+	cm.newSet();
+	
+	resources = {red: 0, green: 0, blue: 0, black: 0};
+	production = {red: 0, green: 0, blue: 0, black: 0};
+
 	inplay = true;
 	startTime = Date.now();
 	seconds = 0;
+}
+
+function endGame() {
+	inplay = false;
+	showResult = true;
 }
 
 function income() {

@@ -4,19 +4,32 @@ function CardManager() {
 	this.cardWidth = 140;
 	this.cardHeight = 150;
 	this.cardSpacing = 10;
+	this.w = this.cardWidth * 3 + this.cardSpacing * 2;
+	this.h = this.cardHeight;
 	this.pool = [
-		{name: "Memo bot", text: ["Get +10", "green production"], colorcode: 0, cost: {red: 50, green: 0, blue: 200, black: 0}, f: function() {production.green += 10}},
-		{name: "Thunder style", text: ["Get +5", "red production"], colorcode: 0, cost: {red: 0, green: 0, blue: 50, black: 0}, f: function() {production.red += 5}},
-		{name: "Mega factory", text: ["Get +15", "to production", "of every color"], colorcode: 0, cost: {red: 20, green: 20, blue: 1500, black: 0}, f: function() {for (a of COLORS) {production[a] += 15}}},
-		{name: "c", colorcode: 0, cost: {red: 0, green: 0, blue: 0, black: 0}, f: function() {resources.red++}},
-		{name: "Charity", text: ["Gain 10 vp"], colorcode: 0, cost: {red: 30, green: 30, blue: 30, black: 30}, f: function() {vp += 10}},
-		{name: "Nikoli Guru", text: ["Get +20", "black production"], colorcode: 0, cost: {red: 100, green: 50, blue: 300, black: 0}, f: function() {vp += 10}},
-	]
+		{name: "Flash cards", text: ["Get +5", "green production"], bg: "#ccffcc", cost: {red: 50, green: 0, blue: 200, black: 0}, f: function() {production.green += 5}},
+		{name: "Aimbot", text: ["Get +20", "blue production"], bg: "#ccccff", cost: {red: 200, green: 200, blue: 300, black: 100}, f: function() {production.blue += 20}},
+		{name: "Thunder style", text: ["Get +2", "red production"], bg: "#ffd2d2", cost: {red: 0, green: 0, blue: 100, black: 0}, f: function() {production.red += 2}},
+		{name: "Mega factory", text: ["Get +15", "to production", "of every color"], bg: "#009999", cost: {red: 700, green: 700, blue: 1800, black: 400}, f: function() {for (a of COLORS) {production[a] += 15}}},
+		{name: "Hack-a-mole", text: ["Get +10", "blue production"], bg: "#bbbbff", cost: {red: 500, green: 0, blue: 0, black: 0}, f: function() {production.blue += 10}},
+		{name: "Charity", text: ["Gain 10 vp"], bg: "#ffffa9", cost: {red: 30, green: 30, blue: 30, black: 30}, f: function() {vp += 10}},
+		{name: "Nikoli Guru", text: ["Get +20", "black production"], bg: "#888888", cost: {red: 100, green: 50, blue: 300, black: 0}, f: function() {vp += 10}},
+		{name: "Black market", text: ["Gain +500", "black instantly"], bg: "#bbbbbb", cost: {red: 500, green: 150, blue: 120, black: 0}, f: function() {resources.black += 500}},
+		{name: "Trade post", text: ["Gain +250", "of blue, green", "and black"], bg: "#bbbbbb", cost: {red: 500, green: 0, blue: 0, black: 0}, f: function() {resources.black += 250; resources.green += 250; resources.blue += 250}},
+		{name: "Landmark", text: ["Gain 1500 vp"], bg: "#ffff30", cost: {red: 3000, green: 3000, blue: 3000, black: 3000}, f: function() {vp += 1500}},
+		{name: "True MLG", text: ["Gain 5 vp for each", '"PERFECT!!!" click'], bg: "#ccff30", cost: {red: 100, green: 200, blue: 500, black: 100}, f: function() {wam.mlg += 1}},
+	];
+	this.pool = this.pool.sort(function(a, b) {
+		return (a.cost.red + a.cost.green + a.cost.blue + a.cost.black) - (b.cost.red + b.cost.green + b.cost.blue + b.cost.black);
+		});
 	this.bought = [];
 	this.selection = [];
 	this.upcoming = [];
 	for (var i = 0; i < 3; ++i) {
-		this.upcoming.push(Math.floor(Math.random() * this.pool.length));
+		do {
+			toAdd = Math.floor(Math.random() * this.pool.length);
+		} while (toAdd === this.upcoming[0] || toAdd === this.upcoming[1]);
+		this.upcoming.push(toAdd);
 	}
 	this.canAfford = function(c) {
 		for (k of COLORS) {
@@ -26,27 +39,36 @@ function CardManager() {
 		return true;
 	}
 	this.buy = function(id) {
-		c = this.pool[this.selection[id]];
-		if (this.canAfford(c)) {
-			for (k of COLORS) {
-				resources[k] -= c.cost[k];
+		if (id >= 0 && id < 3) {
+			c = this.pool[this.selection[id]];
+			if (this.canAfford(c)) {
+				for (k of COLORS) {
+					resources[k] -= c.cost[k];
+				}
+				this.bought.push(this.selection[id]);
+				c.f();
+				this.bought.sort(); // uglyyyyy... I don't give a fuck
+				this.newSet();
 			}
-			this.bought.push(this.selection[id]);
-			c.f();
-			this.newSet();
 		}
 	}
 	this.newSet = function() {
-		// TODO: select based on resources
+		// TODO: select based on resources etc
 		this.selection = this.upcoming.slice();  // magic
 		this.upcoming = [];
+		var toAdd;
 		for (var i = 0; i < 3; ++i) {
-			this.upcoming.push(Math.floor(Math.random() * this.pool.length));
+			do {
+				toAdd = Math.floor(Math.random() * this.pool.length);
+			} while (toAdd === this.upcoming[0] || toAdd === this.upcoming[1]);
+			this.upcoming.push(toAdd);
 		}
 	}
 	this.draw = function() {
 		ctx.font = "30px Arial";
-		ctx.fillText("CARDS", this.x + (this.cardWidth * 3 + this.cardSpacing * 2) / 2, this.y - 10);
+		ctx.fillText("CARDS", this.x + this.w / 2, this.y - 20);
+		ctx.font = "15px Arial";
+		ctx.fillText("shift + j/k/l or click to buy", this.x + this.w / 2, this.y - 5);
 		
 		var ey = this.cardHeight + this.cardSpacing;
 		var ex = (this.cardWidth + this.cardSpacing);
@@ -54,6 +76,9 @@ function CardManager() {
 			for (var i = 0; i < 3; ++i) {
 				var c = this.pool[[this.selection, this.upcoming][j][i]];
 				ctx.strokeStyle = (this.canAfford(c) ? "green" : "red");
+				ctx.fillStyle = c.bg || "white";
+				
+				ctx.fillRect(this.x + i * ex, this.y + j * ey, this.cardWidth, this.cardHeight);
 				ctx.strokeRect(this.x + i * ex, this.y + j * ey, this.cardWidth, this.cardHeight);
 				ctx.fillStyle = "black";
 				ctx.font = "20px Arial";
@@ -64,7 +89,7 @@ function CardManager() {
 					ctx.fillText(c.cost[COLORS[k]], this.x + i * ex + this.cardWidth * ((Math.floor(k/2) + 1)/3), this.y + 35 + j * ey + (k % 2) * 20);
 				}
 				for (k in c.text) {
-					ctx.fillText(c.text[k], this.x + i * ex + this.cardWidth / 2, this.y + j * ey + 80 + k * 10);
+					ctx.fillText(c.text[k], this.x + i * ex + this.cardWidth / 2, this.y + j * ey + 80 + k * 12);
 				}
 			}
 			

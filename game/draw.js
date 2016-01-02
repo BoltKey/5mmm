@@ -29,6 +29,12 @@ function draw() {
 		ctx.fillText(Math.floor(seconds / 60) + ":" + ((seconds % 60) < 10 ? "0" : "") + seconds%60, canvas.width / 2 - 40, 30);
 		ctx.fillText(vp, canvas.width / 2 + 40, 30);
 	}
+	else if (showResult) {
+		ctx.fillStyle = "black";
+		ctx.font = "40px Arial";
+		ctx.fillText("Time over. You scored " + vp, canvas.width / 2, 200 );
+		ctx.fillText("Press 'End' or click here to restart.", canvas.width / 2, 250)
+	}
 }
 
 function floatText(text, x, y, color) {
