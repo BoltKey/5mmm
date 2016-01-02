@@ -7,8 +7,10 @@ function DigitMemo() {
 	this.padding = 3;
 	this.reward = 250;
 	this.penalty = 0;
+	this.effect = 0;
 	this.newSet = function() {
 		var tempvale, randind;
+		this.currNumb = 0;
 		this.numbers = [];
 		this.revealed = [];
 		for (var i = 1; i <= 9; ++i) {
@@ -23,8 +25,13 @@ function DigitMemo() {
 		}
 	}
 	this.draw = function() {
-		ctx.fillStyle = "#003300";
+		
 		ctx.strokeStyle = "black";
+		ctx.fillStyle = "rgba(" + (this.effect > 0 ? "0, 255, 0, " : "255, 0, 0, ") + (Math.abs(this.effect) / 100) + ")";
+		ctx.strokeRect(this.x - 3, this.y - 3, this.w + 10, this.w + 10);
+		ctx.fillRect(this.x - 3, this.y - 3, this.w + 10, this.w + 10);
+		this.effect -= Math.sign(this.effect);  // move tow zero
+		ctx.fillStyle = "#003300";
 		for (var i = 0; i < 9; ++i) {
 			var x = this.x + (this.w / 3 + this.padding) * (i % 3);
 			var y = this.y + (this.w / 3 + this.padding) * Math.floor(i / 3);
@@ -53,10 +60,13 @@ function DigitMemo() {
 				this.revealed[index] = true;
 				if (this.currNumb === 9) {
 					resources.green += this.reward;
+					this.effect = 100;
 					this.newSet();
 				}
 			}
 			else {
+				if (this.currNumb > 3)
+					this.effect = -this.currNumb * 10;
 				this.currNumb = 0;
 				for (i = 0; i < 9; ++i) {
 					this.revealed[i] = false;
