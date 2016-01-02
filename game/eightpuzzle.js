@@ -5,6 +5,8 @@ function EightPuzzle() {
 	this.w = 180;
 	this.padding = 3;
 	this.reward = 250;
+	this.effect = 0;
+	this.mult = 1;
 	this.inverted = false;
 	
 	this.doMove = function(direction) {
@@ -35,14 +37,18 @@ function EightPuzzle() {
 				break;
 		}
 		if (this.solved()) {
+			this.effect = 100;
 			resources.black += this.reward;
 			this.newSet();
 		}
 	}
 	this.draw = function() {
+		ctx.fillStyle = "rgba(0, 255, 0, " + (this.effect / 100) + ")";
+		this.effect -= Math.sign(this.effect);
+		ctx.fillRect(this.x - 2 * this.padding, this.y - this.padding * 2, this.w + 5 * this.padding + 1, this.w + 5 * this.padding + 1);
 		ctx.fillStyle = "#cccccc";
 		ctx.strokeRect(this.x - 2 * this.padding, this.y - this.padding * 2, this.w + 5 * this.padding + 1, this.w + 5 * this.padding + 1);  // dont ask about that one pixel please
-		ctx.fillRect(this.x - 2 * this.padding, this.y - this.padding * 2, this.w + 5 * this.padding + 1, this.w + 5 * this.padding + 1);
+		//ctx.fillRect(this.x - 2 * this.padding, this.y - this.padding * 2, this.w + 5 * this.padding + 1, this.w + 5 * this.padding + 1);
 		ctx.fillStyle = "black";
 		for (var i = 0; i < 9; ++i) {
 			var x = this.x + (this.w / 3 + this.padding) * (i % 3);

@@ -8,6 +8,7 @@ function FindLetter() {
 	this.w = 150;
 	this.reward = 60;
 	this.penalty = 10;
+	this.mult = 1;
 	this.newSet = function() {
 		var index = Math.floor(Math.random() * 26);
 		var randind;

@@ -9,6 +9,8 @@ function Typer() {
 	this.amt = 10;
 	this.reward = 5;
 	this.penalty = 3;
+	this.mult = 1;
+	this.streak = 0;
 	for (var i = 0; i < this.amt; ++i) {
 		this.letters.push(this.alphabet[Math.floor(Math.random() * 26)]);
 	}
@@ -30,11 +32,13 @@ function Typer() {
 			this.letters.splice(this.amt - 1, 1);
 			this.letters = [this.alphabet[Math.floor(Math.random() * 26)]].concat(this.letters);
 			this.offset += this.w / this.amt;
+			++this.streak;
 			texts.push(new floatText("+" + this.reward, this.x + this.w / 2 - 10 + (Math.floor(Math.random() * 20)), this.y - 40, "rgba(0, 255, 0, "));
 		}
 		else {
 			resources.red -= this.penalty;
 			texts.push(new floatText("-" + this.penalty, this.x + this.w / 2 - 10 + (Math.floor(Math.random() * 20)), this.y - 20, "rgba(255, 0, 0, "));
+			this.streak = 0;
 		}
 	}
 }

@@ -6,6 +6,7 @@ function Whackamole() {
 	this.h = 140;
 	this.w = 200;
 	this.mlg = 0;
+	this.mult = 1;
 	texts = [];
 	this.target = this.target = [5 + Math.floor(Math.random() * (this.w - 10)), 5 + Math.floor(Math.random() * (this.h - 10))];
 	this.click = function(x, y) {

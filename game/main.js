@@ -9,8 +9,8 @@ var keysDown;
 var lastkd;
 var mouseDown;
 var lastmd;
-var resources;
-var production;
+var resources = {red: 0, green: 0, blue: 0, black: 0};
+var production = {red: 0, green: 0, blue: 0, black: 0};
 var texts = [];
 
 var vp = 0;
@@ -26,7 +26,7 @@ function main() {
 	//canvas
 	canvas = $("#game")[0];
 	ctx = canvas.getContext("2d");
-	ctx.fillRect(10, 10, 10, 10);
+	ctx.fillText("Loading... If you can read this, something went wrong probably", 10, 10);
 	
 	//mouse
 	var offset = $("#game").offset();
@@ -83,13 +83,15 @@ function start() {
 	dm.newSet();
 	ep = new EightPuzzle();
 	ep.newSet();
-	cm = new CardManager();
-	cm.newSet();
 	
 	resources = {red: 0, green: 0, blue: 0, black: 0};
 	production = {red: 0, green: 0, blue: 0, black: 0};
+	cm = new CardManager();
+	cm.newSet(true);
+	cm.newSet(false);
 
 	inplay = true;
+	vp = 0;
 	startTime = Date.now();
 	seconds = 0;
 }
