@@ -84,7 +84,7 @@ function start() {
 	ep = new EightPuzzle();
 	ep.newSet();
 	
-	resources = {red: 0, green: 0, blue: 0, black: 0};
+	resources = {red: 100, green: 0, blue: 100, black: 0};
 	production = {red: 0, green: 0, blue: 0, black: 0};
 	cm = new CardManager();
 	cm.newSet(true);

@@ -64,6 +64,7 @@ function EightPuzzle() {
 		}
 		
 		ctx.fillText(resources.black, this.x + this.w / 2, this.y - 20);
+		
 	}
 	this.solved = function() {
 		for (var i = 0; i < 9; ++i) {

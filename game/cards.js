@@ -4,6 +4,7 @@ function CardManager() {
 	this.cardWidth = 140;
 	this.cardHeight = 150;
 	this.cardSpacing = 10;
+	this.effect = 0;
 	this.w = this.cardWidth * 3 + this.cardSpacing * 2;
 	this.h = this.cardHeight;
 	this.pool = [
@@ -24,6 +25,8 @@ function CardManager() {
 		return (a.cost.red + a.cost.green + a.cost.blue + a.cost.black) - (b.cost.red + b.cost.green + b.cost.blue + b.cost.black);
 		});
 	this.bought = [];
+	this.last = [];
+	this.lastbought = 0;
 	this.selection = [];
 	this.upcoming = [];
 	for (var i = 0; i < 3; ++i) {
@@ -48,6 +51,9 @@ function CardManager() {
 				}
 				this.bought.push(this.selection[id]);
 				c.f();
+				this.last = this.selection.slice();
+				this.lastbought = id;
+				this.effect = 100;
 				this.bought.sort(); // uglyyyyy... I don't give a fuck
 				this.newSet(false);
 			}
@@ -81,6 +87,24 @@ function CardManager() {
 			this.upcoming.push(toAdd);
 		}
 	}
+	this.drawCard = function(id, x, y, w, h) {
+		var c = this.pool[id];
+		ctx.strokeStyle = (this.canAfford(c) ? "green" : "red");
+		ctx.fillStyle = c.bg || "white";
+		ctx.fillRect(x, y, this.cardWidth, this.cardHeight);
+		ctx.strokeRect(x, y, this.cardWidth, this.cardHeight);
+		ctx.fillStyle = "black";
+		ctx.font = "20px Arial";
+		ctx.fillText(c.name, x + w / 2, y + 20);
+		ctx.font = "12px Arial";
+		for (var k = 0; k < 4; ++k) {
+			ctx.fillStyle = COLORS[k];
+			ctx.fillText(c.cost[COLORS[k]], x + this.cardWidth * ((Math.floor(k/2) + 1)/3), y + 35 + (k % 2) * 20);
+		}
+		for (k in c.text) {
+			ctx.fillText(c.text[k], x + this.cardWidth / 2, y + 80 + k * 12);
+		}
+	}
 	this.draw = function() {
 		ctx.font = "30px Arial";
 		ctx.fillText("CARDS", this.x + this.w / 2, this.y - 20);
@@ -89,29 +113,25 @@ function CardManager() {
 		
 		var ey = this.cardHeight + this.cardSpacing;
 		var ex = (this.cardWidth + this.cardSpacing);
-		for (var j = 0; j < 2; ++j) {
+		ctx.globalAlpha = 1 - (this.effect / 200)
+		for (var j = 0; j < 2 + (this.effect > 0); ++j) {
 			for (var i = 0; i < 3; ++i) {
-				var c = this.pool[[this.selection, this.upcoming][j][i]];
-				ctx.strokeStyle = (this.canAfford(c) ? "green" : "red");
-				ctx.fillStyle = c.bg || "white";
-				
-				ctx.fillRect(this.x + i * ex, this.y + j * ey, this.cardWidth, this.cardHeight);
-				ctx.strokeRect(this.x + i * ex, this.y + j * ey, this.cardWidth, this.cardHeight);
-				ctx.fillStyle = "black";
-				ctx.font = "20px Arial";
-				ctx.fillText(c.name, this.x + i * ex + this.cardWidth / 2, this.y + 20 + j * ey);
-				ctx.font = "12px Arial";
-				for (var k = 0; k < 4; ++k) {
-					ctx.fillStyle = COLORS[k];
-					ctx.fillText(c.cost[COLORS[k]], this.x + i * ex + this.cardWidth * ((Math.floor(k/2) + 1)/3), this.y + 35 + j * ey + (k % 2) * 20);
+				if (j === 2) {
+					if (i === this.lastbought) {
+						ctx.globalAlpha = 1;
+					}
+					else {
+						ctx.globalAlpha = this.effect / 100;
+					}
 				}
-				for (k in c.text) {
-					ctx.fillText(c.text[k], this.x + i * ex + this.cardWidth / 2, this.y + j * ey + 80 + k * 12);
-				}
+				var id = [this.selection, this.upcoming, this.last][j][i];
+				var y = this.y + j * ey - (this.cardHeight + this.cardSpacing) * (Math.sqrt((100 - this.effect) / 100) - 1 + (j === 2 ? 3 : 0));
+				var x = this.x + i * ex;
+				this.drawCard(id, x, y, this.cardWidth, this.cardHeight);
 			}
-			
 			ctx.globalAlpha = 0.5;
 		}
+		this.effect -= Math.sign(this.effect);
 		ctx.globalAlpha = 1;
 	}
 }

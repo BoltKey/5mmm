@@ -47,6 +47,7 @@ function DigitMemo() {
 		}
 		ctx.fillStyle = "green";
 		ctx.fillText(resources.green, this.x + this.w / 2, this.y - 5);
+		ctx.fillText("Use numpad or mouse", this.x + this.w / 2, this.y + this.w + 25);
 	}
 	this.attempt = function(id) {
 		var transl = [9, 6, 7, 8, 3, 4, 5, 0, 1, 2];
