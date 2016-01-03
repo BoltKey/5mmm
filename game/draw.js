@@ -27,6 +27,7 @@ function draw() {
 		ctx.fillText(resources.black + " (+" + production.black + ")", 530, 620);
 		
 		ctx.fillText(Math.floor(seconds / 60) + ":" + ((seconds % 60) < 10 ? "0" : "") + seconds%60, canvas.width / 2 - 40, 30);
+		ctx.fillStyle = "#bbbb00";
 		ctx.fillText(vp, canvas.width / 2 + 40, 30);
 	}
 	else if (showResult) {

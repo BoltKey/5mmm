@@ -8,27 +8,30 @@ function CardManager() {
 	this.w = this.cardWidth * 3 + this.cardSpacing * 2;
 	this.h = this.cardHeight;
 	this.pool = [
-		{name: "Flash cards", text: ["Get +5", "green production"], bg: "#ccffcc", cost: {red: 50, green: 0, blue: 200, black: 0}, f: function() {production.green += 5}},
-		{name: "Aimbot", text: ["Get +20", "blue production"], bg: "#ccccff", cost: {red: 200, green: 200, blue: 300, black: 100}, f: function() {production.blue += 20}},
-		{name: "Thunder style", text: ["Get +1", "red production"], bg: "#ffd2d2", cost: {red: 0, green: 0, blue: 50, black: 0}, f: function() {production.red += 1}},
-		{name: "Autoclicker", text: ["Get +1", "blue production"], bg: "#d2d2ff", cost: {red: 50, green: 0, blue: 0, black: 0}, f: function() {production.blue += 1}},
-		{name: "Slidy sim", text: ["Get +2", "black production"], bg: "#eeeeee", cost: {red: 60, green: 0, blue: 60, black: 0}, f: function() {production.black += 2}},
-		{name: "Green mind", text: ["Get +2", "green production"], bg: "#eeffee", cost: {red: 50, green: 0, blue: 70, black: 0}, f: function() {production.green += 2}},
-		{name: "Mega factory", text: ["Get +15", "to production", "of every color"], bg: "#009999", cost: {red: 700, green: 700, blue: 1800, black: 400}, f: function() {for (a of COLORS) {production[a] += 15}}},
-		{name: "Mini factory", text: ["Get +3", "to production", "of every color"], bg: "#33aaaa", cost: {red: 160, green: 160, blue: 400, black: 100}, f: function() {for (a of COLORS) {production[a] += 3}}},
-		{name: "Hack-a-mole", text: ["Get +10", "blue production"], bg: "#bbbbff", cost: {red: 450, green: 0, blue: 0, black: 0}, f: function() {production.blue += 10}},
-		{name: "Charity", text: ["Gain 100 vp"], bg: "#ffffa9", cost: {red: 300, green: 300, blue: 300, black: 300}, f: function() {vp += 100}},
-		{name: "Tighten tiles", text: ["Increase black", "reward multiplier", "by 0.5"], bg: "#667766", cost: {red: 25, green: 350, blue: 25, black: 100}, f: function() {ep.mult += 0.5;}},
-		{name: "Click! Faster!!", text: ["Increase blue", "reward multiplier", "by 0.5"], bg: "#7777ee", cost: {red: 25, green: 350, blue: 100, black: 25}, f: function() {wam.mult += 0.5;}},
-		{name: "Memo league", text: ["Increase green", "reward multiplier", "by 0.5"], bg: "#77ee77", cost: {red: 25, green: 425, blue: 25, black: 25}, f: function() {dm.mult += 0.5;}},
-		{name: "Key element", text: ["Increase red", "reward multiplier", "by 0.5"], bg: "#ee7777", cost: {red: 100, green: 350, blue: 25, black: 25}, f: function() {typer.mult += 0.5;}},
-		{name: "Multi talent", text: ["Increase red", "reward multiplier", "by 0.5"], bg: "#9900cc", cost: {red: 100, green: 700, blue: 100, black: 100}, f: function() {typer.mult += 0.5;}},
-		{name: "Hire Ben", text: ["Get +20", "black production"], bg: "#888888", cost: {red: 200, green: 200, blue: 600, black: 0}, f: function() {production.black += 20}},
-		{name: "Time shift", text: ["Freeze time", "for 10 seconds"], bg: "#bbbbbb", cost: {red: 200, green: 200, blue: 200, black: 1000}, f: function() {startTime += 10000}},
-		{name: "Black market", text: ["Gain +500", "black instantly"], bg: "#bbbbbb", cost: {red: 500, green: 150, blue: 120, black: 0}, f: function() {resources.black += 500}},
-		{name: "Trade post", text: ["Gain +250", "of blue, green", "and black"], bg: "#bbbbbb", cost: {red: 500, green: 0, blue: 0, black: 0}, f: function() {resources.black += 250; resources.green += 250; resources.blue += 250}},
-		{name: "Landmark", text: ["Gain 1500 vp"], bg: "#ffff30", cost: {red: 3000, green: 3000, blue: 3000, black: 3000}, f: function() {vp += 1500}},
-		{name: "True MLG", text: ["Gain 5 vp for each", '"PERFECT!!!" click'], bg: "#ccff30", cost: {red: 100, green: 200, blue: 500, black: 100}, f: function() {wam.mlg += 1}},
+		{name: "Flash cards", text: ["Get +5", "green production"], bg: "#ccffcc", cost: {red: 50, green: 0, blue: 200, black: 0}, vp: 2, f: function() {production.green += 5}},
+		{name: "Aimbot", text: ["Get +20", "blue production"], bg: "#ccccff", cost: {red: 200, green: 200, blue: 300, black: 100}, vp: 1, f: function() {production.blue += 20}},
+		{name: "Thunder style", text: ["Get +1", "red production"], bg: "#ffd2d2", cost: {red: 0, green: 0, blue: 50, black: 0}, vp: 1, f: function() {production.red += 1}},
+		{name: "Autoclicker", text: ["Get +1", "blue production"], bg: "#d2d2ff", cost: {red: 50, green: 0, blue: 0, black: 0}, vp: 1, f: function() {production.blue += 1}},
+		{name: "Slidy sim", text: ["Get +2", "black production"], bg: "#eeeeee", cost: {red: 60, green: 0, blue: 60, black: 0}, vp: 2, f: function() {production.black += 2}},
+		{name: "Statue", text: [], bg: "#ffffcf", cost: {red: 20, green: 0, blue: 30, black: 0}, vp: 10, f: function() {}},
+		{name: "Collect taxes", text: ["Lose 10 vp.", "Gain 200 red and", "200 blue instantly"], bg: "#bbeeee", cost: {red: 0, green: 0, blue: 0, black: 100}, vp: -10, f: function() {resources.red += 200; resources.blue += 200}},
+		{name: "Green mind", text: ["Get +2", "green production"], bg: "#eeffee", cost: {red: 50, green: 0, blue: 70, black: 0}, vp: 2, f: function() {production.green += 2}},
+		{name: "Mega factory", text: ["Get +15", "to production", "of every color"], bg: "#009999", cost: {red: 700, green: 700, blue: 1800, black: 400}, vp: 30, f: function() {for (a of COLORS) {production[a] += 15}}},
+		{name: "Mini factory", text: ["Get +3", "to production", "of every color"], bg: "#33aaaa", cost: {red: 160, green: 160, blue: 400, black: 100}, vp: 10, f: function() {for (a of COLORS) {production[a] += 3}}},
+		{name: "Hack-a-mole", text: ["Get +10", "blue production"], bg: "#bbbbff", cost: {red: 450, green: 0, blue: 0, black: 0}, vp: 5, f: function() {production.blue += 10}},
+		{name: "Charity", text: [], bg: "#ffffa9", cost: {red: 300, green: 300, blue: 300, black: 300}, vp: 200, f: function() {}},
+		{name: "Tighten tiles", text: ["Increase black", "reward multiplier", "by 0.5"], bg: "#667766", cost: {red: 25, green: 350, blue: 25, black: 100}, vp: 4, f: function() {ep.mult += 0.5;}},
+		{name: "Click! Faster!!", text: ["Increase blue", "reward multiplier", "by 0.5"], bg: "#7777ee", cost: {red: 25, green: 350, blue: 100, black: 25}, vp: 4, f: function() {wam.mult += 0.5;}},
+		{name: "Memo league", text: ["Increase green", "reward multiplier", "by 0.5"], bg: "#77ee77", cost: {red: 25, green: 425, blue: 25, black: 25}, vp: 4, f: function() {dm.mult += 0.5;}},
+		{name: "Key element", text: ["Increase red", "reward multiplier", "by 0.5"], bg: "#ee7777", cost: {red: 100, green: 350, blue: 25, black: 25}, vp: 4, f: function() {typer.mult += 0.5;}},
+		{name: "Multi talent", text: ["Increase red", "reward multiplier", "by 0.5"], bg: "#9900cc", cost: {red: 100, green: 700, blue: 100, black: 100}, vp: 8, f: function() {typer.mult += 0.5;}},
+		{name: "Hire Ben", text: ["Get +20", "black production"], bg: "#888888", cost: {red: 200, green: 200, blue: 600, black: 0}, f: function() {production.black += 20}, vp: 5, },
+		{name: "Time shift", text: ["Freeze time", "for 10 seconds"], bg: "#bbbbbb", cost: {red: 200, green: 200, blue: 200, black: 1000}, vp: 15, f: function(){startTime += 10000}},
+		{name: "Black market", text: ["Gain +500", "black instantly"], bg: "#bbbbbb", cost: {red: 500, green: 150, blue: 120, black: 0}, vp: 4, f: function(){resources.black += 500}},
+		{name: "Trade post", text: ["Gain +250", "of blue, green", "and black"], bg: "#bbbbbb", cost: {red: 500, green: 0, blue: 0, black: 0},  vp: 3, f: function(){resources.black += 250; resources.green += 250; resources.blue += 250}},
+		{name: "Landmark", text: [], bg: "#ffff30", cost: {red: 3000, green: 3000, blue: 3000, black: 3000}, vp: 1500, f: function() {}},
+		{name: "Cathedral", text: ["Get +1 vp", "every second"], bg: "#ffbb00", cost: {red: 200, green: 200, blue: 300, black: 500}, vp: 0, f: function() {vpps += 1}},
+		{name: "True MLG", text: ["Gain 5 vp for each", '"PERFECT!!!" click'], vp: 0, bg: "#ccff30", cost: {red: 100, green: 200, blue: 500, black: 100}, f: function() {wam.mlg += 1}},
 	];
 	this.pool = this.pool.sort(function(a, b) {
 		return (a.cost.red + a.cost.green + a.cost.blue + a.cost.black) - (b.cost.red + b.cost.green + b.cost.blue + b.cost.black);
@@ -58,6 +61,7 @@ function CardManager() {
 				for (k of COLORS) {
 					resources[k] -= c.cost[k];
 				}
+				vp += c.vp;
 				this.bought.push(this.selection[id]);
 				c.f();
 				this.last = this.selection.slice();
@@ -107,13 +111,16 @@ function CardManager() {
 			ctx.fillStyle = "black";
 			ctx.font = Math.floor((h / 150) * 20) + "px Arial";
 			ctx.fillText(c.name, x + w / 2, y + 20);
+			ctx.fillStyle = "#bbbb00";
+			ctx.fillText(c.vp, x + w / 2, y + h * 0.55);
+			ctx.fillStyle = "black";
 			ctx.font = "12px Arial";
 			for (var k = 0; k < 4; ++k) {
 				ctx.fillStyle = COLORS[k];
 				ctx.fillText(c.cost[COLORS[k]], x + w * ((Math.floor(k/2) + 1)/3), y + 35 + (k % 2) * 20);
 			}
 			for (k in c.text) {
-				ctx.fillText(c.text[k], x + w / 2, y + 80 + k * 12);
+				ctx.fillText(c.text[k], x + w / 2, y + h * 0.75 + k * 12);
 			}
 		}
 	}

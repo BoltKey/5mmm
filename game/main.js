@@ -86,12 +86,14 @@ function start() {
 	
 	resources = {red: 0, green: 0, blue: 0, black: 0};
 	production = {red: 0, green: 0, blue: 0, black: 0};
+	
 	cm = new CardManager();
 	cm.newSet(true);
 	cm.newSet(false);
 
 	inplay = true;
 	vp = 0;
+	vpps = 0;
 	startTime = Date.now();
 	seconds = 0;
 }
@@ -105,5 +107,6 @@ function income() {
 	for (k of COLORS) {
 		resources[k] += production[k];
 	}
+	vp += vpps;
 }
 window.onload = main;

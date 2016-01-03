@@ -13,6 +13,6 @@ foreach (glob("game/*.js") as $filename)
 <script> window.onload = main; </script>
 </head>
 <body style="margin: 0">
-<canvas style="background-color:#aaaaaa;" class="unselectable" id="game" draggable="false" align="center" width="960" height="640">Your browser does not support canvas. Use Chrome instead.</canvas>
+<canvas style="background-color:#eeeeee;" class="unselectable" id="game" draggable="false" align="center" width="960" height="640">Your browser does not support canvas. Use Chrome instead.</canvas>
 </div>
 </body>
