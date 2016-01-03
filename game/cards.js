@@ -12,10 +12,19 @@ function CardManager() {
 		{name: "Aimbot", text: ["Get +20", "blue production"], bg: "#ccccff", cost: {red: 200, green: 200, blue: 300, black: 100}, f: function() {production.blue += 20}},
 		{name: "Thunder style", text: ["Get +1", "red production"], bg: "#ffd2d2", cost: {red: 0, green: 0, blue: 50, black: 0}, f: function() {production.red += 1}},
 		{name: "Autoclicker", text: ["Get +1", "blue production"], bg: "#d2d2ff", cost: {red: 50, green: 0, blue: 0, black: 0}, f: function() {production.blue += 1}},
+		{name: "Slidy sim", text: ["Get +2", "black production"], bg: "#eeeeee", cost: {red: 60, green: 0, blue: 60, black: 0}, f: function() {production.black += 2}},
+		{name: "Green mind", text: ["Get +2", "green production"], bg: "#eeffee", cost: {red: 50, green: 0, blue: 70, black: 0}, f: function() {production.green += 2}},
 		{name: "Mega factory", text: ["Get +15", "to production", "of every color"], bg: "#009999", cost: {red: 700, green: 700, blue: 1800, black: 400}, f: function() {for (a of COLORS) {production[a] += 15}}},
+		{name: "Mini factory", text: ["Get +3", "to production", "of every color"], bg: "#33aaaa", cost: {red: 160, green: 160, blue: 400, black: 100}, f: function() {for (a of COLORS) {production[a] += 3}}},
 		{name: "Hack-a-mole", text: ["Get +10", "blue production"], bg: "#bbbbff", cost: {red: 450, green: 0, blue: 0, black: 0}, f: function() {production.blue += 10}},
 		{name: "Charity", text: ["Gain 100 vp"], bg: "#ffffa9", cost: {red: 300, green: 300, blue: 300, black: 300}, f: function() {vp += 100}},
-		{name: "Hire Ben", text: ["Get +20", "black production"], bg: "#888888", cost: {red: 100, green: 50, blue: 300, black: 0}, f: function() {production.black += 20}},
+		{name: "Tighten tiles", text: ["Increase black", "reward multiplier", "by 0.5"], bg: "#667766", cost: {red: 25, green: 350, blue: 25, black: 100}, f: function() {ep.mult += 0.5;}},
+		{name: "Click! Faster!!", text: ["Increase blue", "reward multiplier", "by 0.5"], bg: "#7777ee", cost: {red: 25, green: 350, blue: 100, black: 25}, f: function() {wam.mult += 0.5;}},
+		{name: "Memo league", text: ["Increase green", "reward multiplier", "by 0.5"], bg: "#77ee77", cost: {red: 25, green: 425, blue: 25, black: 25}, f: function() {dm.mult += 0.5;}},
+		{name: "Key element", text: ["Increase red", "reward multiplier", "by 0.5"], bg: "#ee7777", cost: {red: 100, green: 350, blue: 25, black: 25}, f: function() {typer.mult += 0.5;}},
+		{name: "Multi talent", text: ["Increase red", "reward multiplier", "by 0.5"], bg: "#9900cc", cost: {red: 100, green: 700, blue: 100, black: 100}, f: function() {typer.mult += 0.5;}},
+		{name: "Hire Ben", text: ["Get +20", "black production"], bg: "#888888", cost: {red: 200, green: 200, blue: 600, black: 0}, f: function() {production.black += 20}},
+		{name: "Time shift", text: ["Freeze time", "for 10 seconds"], bg: "#bbbbbb", cost: {red: 200, green: 200, blue: 200, black: 1000}, f: function() {startTime += 10000}},
 		{name: "Black market", text: ["Gain +500", "black instantly"], bg: "#bbbbbb", cost: {red: 500, green: 150, blue: 120, black: 0}, f: function() {resources.black += 500}},
 		{name: "Trade post", text: ["Gain +250", "of blue, green", "and black"], bg: "#bbbbbb", cost: {red: 500, green: 0, blue: 0, black: 0}, f: function() {resources.black += 250; resources.green += 250; resources.blue += 250}},
 		{name: "Landmark", text: ["Gain 1500 vp"], bg: "#ffff30", cost: {red: 3000, green: 3000, blue: 3000, black: 3000}, f: function() {vp += 1500}},
@@ -54,7 +63,7 @@ function CardManager() {
 				this.last = this.selection.slice();
 				this.lastbought = id;
 				this.effect = 100;
-				this.bought.sort(); // uglyyyyy... I don't give a fuck
+				this.bought.sort(function(a, b){return a-b}); // uglyyyyy... I don't give a fuck
 				this.newSet(false);
 			}
 		}
@@ -138,12 +147,17 @@ function CardManager() {
 		ctx.globalAlpha = 1;
 		var spaces = 0;
 		var last = this.bought[0];
-		for (i in this.bought) {
+		for (i = 0; i < this.bought.length; ++i) {
 			if (last !== this.bought[i]) {
 				last = this.bought[i];
 				++spaces;
 			}
+			if (this.bought[i + 1] !== this.bought[i] && this.bought[i] === this.last[this.lastbought])
+				ctx.globalAlpha = 1 - this.effect / 100;
+			else
+				ctx.globalAlpha = 1;
 			this.drawCard(this.bought[i], 20 + 4 * i + 50 * spaces, 50, this.cardWidth * 0.8, this.cardHeight * 0.8, false, this.bought[i + 1] !== this.bought[i]);
 		}
+		ctx.globalAlpha = 1;
 	}
 }

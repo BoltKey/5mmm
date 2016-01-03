@@ -61,7 +61,7 @@ function DigitMemo() {
 					}
 				this.revealed[index] = true;
 				if (this.currNumb === 9) {
-					resources.green += this.reward;
+					resources.green += this.reward * this.mult;
 					this.effect = 100;
 					this.newSet();
 				}

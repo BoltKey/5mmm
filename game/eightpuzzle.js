@@ -38,7 +38,7 @@ function EightPuzzle() {
 		}
 		if (this.solved()) {
 			this.effect = 100;
-			resources.black += this.reward;
+			resources.black += this.reward * this.mult;
 			this.newSet();
 		}
 	}

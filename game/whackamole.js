@@ -36,8 +36,8 @@ function Whackamole() {
 			color += "255,10,50,";
 		}
 		texts.push(new floatText(text, this.x + x, this.y + y, color));
-		texts.push(new floatText((change > 0 ? "+" : "") + change, this.x + this.w / 2, this.y - 20));
-		resources.blue += change;
+		texts.push(new floatText((change > 0 ? "+" : "") + change * this.mult, this.x + this.w / 2, this.y - 20));
+		resources.blue += Math.ceil(change * this.mult);
 		this.target = [5 + Math.floor(Math.random() * (this.w - 10)), 5 + Math.floor(Math.random() * (this.h - 10))];
 	}
 	

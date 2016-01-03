@@ -35,7 +35,7 @@ function FindLetter() {
 	}
 	this.attempt = function(x) {
 		if (x === this.toFind) {
-			resources.red += this.reward;
+			resources.red += this.reward * this.mult;
 			this.newSet();
 		}
 		else {

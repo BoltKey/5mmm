@@ -7,7 +7,7 @@ function Typer() {
 	this.w = 180;
 	this.offset = 0;
 	this.amt = 10;
-	this.reward = 5;
+	this.reward = 6;
 	this.penalty = 3;
 	this.mult = 1;
 	this.streak = 0;
@@ -27,13 +27,13 @@ function Typer() {
 	}
 	this.attempt = function(x) {
 		if (this.letters[this.amt - 1] === x) {
-			resources.red += this.reward;
+			resources.red += this.reward * this.mult;
 			
 			this.letters.splice(this.amt - 1, 1);
 			this.letters = [this.alphabet[Math.floor(Math.random() * 26)]].concat(this.letters);
 			this.offset += this.w / this.amt;
 			++this.streak;
-			texts.push(new floatText("+" + this.reward, this.x + this.w / 2 - 10 + (Math.floor(Math.random() * 20)), this.y - 40, "rgba(0, 255, 0, "));
+			texts.push(new floatText("+" + (this.reward * this.mult), this.x + this.w / 2 - 10 + (Math.floor(Math.random() * 20)), this.y - 40, "rgba(0, 255, 0, "));
 		}
 		else {
 			resources.red -= this.penalty;
