@@ -82,27 +82,30 @@ function CardManager() {
 				toAdd = Math.floor(middle - Math.pow(Math.random() * 3, 2));  // magic
 				toAdd = Math.max(0, toAdd);
 				++middle;
+				middle = Math.min(middle, this.pool.length);
 				if (middle > 10000) {debugger;}
 			} while (toAdd === this.upcoming[0] || toAdd === this.upcoming[1] || toAdd >= this.pool.length);
 			this.upcoming.push(toAdd);
 		}
 	}
-	this.drawCard = function(id, x, y, w, h) {
+	this.drawCard = function(id, x, y, w, h, border, drawText) {
 		var c = this.pool[id];
-		ctx.strokeStyle = (this.canAfford(c) ? "green" : "red");
+		ctx.strokeStyle = border ? (this.canAfford(c) ? "green" : "red") : "black";
 		ctx.fillStyle = c.bg || "white";
-		ctx.fillRect(x, y, this.cardWidth, this.cardHeight);
-		ctx.strokeRect(x, y, this.cardWidth, this.cardHeight);
-		ctx.fillStyle = "black";
-		ctx.font = "20px Arial";
-		ctx.fillText(c.name, x + w / 2, y + 20);
-		ctx.font = "12px Arial";
-		for (var k = 0; k < 4; ++k) {
-			ctx.fillStyle = COLORS[k];
-			ctx.fillText(c.cost[COLORS[k]], x + this.cardWidth * ((Math.floor(k/2) + 1)/3), y + 35 + (k % 2) * 20);
-		}
-		for (k in c.text) {
-			ctx.fillText(c.text[k], x + this.cardWidth / 2, y + 80 + k * 12);
+		ctx.fillRect(x, y, w, h);
+		ctx.strokeRect(x, y, w, h);
+		if (drawText) {
+			ctx.fillStyle = "black";
+			ctx.font = Math.floor((h / 150) * 20) + "px Arial";
+			ctx.fillText(c.name, x + w / 2, y + 20);
+			ctx.font = "12px Arial";
+			for (var k = 0; k < 4; ++k) {
+				ctx.fillStyle = COLORS[k];
+				ctx.fillText(c.cost[COLORS[k]], x + w * ((Math.floor(k/2) + 1)/3), y + 35 + (k % 2) * 20);
+			}
+			for (k in c.text) {
+				ctx.fillText(c.text[k], x + w / 2, y + 80 + k * 12);
+			}
 		}
 	}
 	this.draw = function() {
@@ -118,20 +121,29 @@ function CardManager() {
 			for (var i = 0; i < 3; ++i) {
 				if (j === 2) {
 					if (i === this.lastbought) {
-						ctx.globalAlpha = 1;
+						ctx.globalAlpha = 0;
 					}
 					else {
 						ctx.globalAlpha = this.effect / 100;
 					}
 				}
 				var id = [this.selection, this.upcoming, this.last][j][i];
-				var y = this.y + j * ey - (this.cardHeight + this.cardSpacing) * (Math.sqrt((100 - this.effect) / 100) - 1 + (j === 2 ? 3 : 0));
+				var y = this.y + j * ey - (this.cardHeight + this.cardSpacing) * (((10000 - Math.pow(this.effect, 2)) / 10000) - 1 + (j === 2 ? 3 : 0));
 				var x = this.x + i * ex;
-				this.drawCard(id, x, y, this.cardWidth, this.cardHeight);
+				this.drawCard(id, x, y, this.cardWidth, this.cardHeight, true, true);
 			}
 			ctx.globalAlpha = 0.5;
 		}
-		this.effect -= Math.sign(this.effect);
+		this.effect -= Math.sign(this.effect) * 2;
 		ctx.globalAlpha = 1;
+		var spaces = 0;
+		var last = this.bought[0];
+		for (i in this.bought) {
+			if (last !== this.bought[i]) {
+				last = this.bought[i];
+				++spaces;
+			}
+			this.drawCard(this.bought[i], 20 + 4 * i + 50 * spaces, 50, this.cardWidth * 0.8, this.cardHeight * 0.8, false, this.bought[i + 1] !== this.bought[i]);
+		}
 	}
 }
