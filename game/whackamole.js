@@ -45,7 +45,7 @@ function Whackamole() {
 		ctx.textAlign = "center";
 		ctx.font = "20px Arial";
 		ctx.fillStyle = "blue";
-		ctx.fillText(resources.blue, this.x + this.w / 2, this.y - 5);
+		ctx.fillText(resources.blue + " (" + this.mult + "x)", this.x + this.w / 2, this.y - 5);
 		ctx.fillStyle = "rgba(200,200,255,1)";
 		ctx.lineWidth = 1.5;
 		ctx.strokeStyle = "black";

@@ -23,7 +23,7 @@ function Typer() {
 			ctx.fillText(this.letters[i], this.x + (this.w / this.amt) * (this.amt - i) + this.offset, this.y);
 		}
 		ctx.fillStyle = "red";
-		ctx.fillText(resources.red, this.x + this.w / 2, this.y - 20);
+		ctx.fillText(resources.red + " (" + this.mult + "x)", this.x + this.w / 2, this.y - 20);
 	}
 	this.attempt = function(x) {
 		if (this.letters[this.amt - 1] === x) {

@@ -63,7 +63,7 @@ function EightPuzzle() {
 			}
 		}
 		
-		ctx.fillText(resources.black, this.x + this.w / 2, this.y - 20);
+		ctx.fillText(resources.black + " (" + this.mult + "x)", this.x + this.w / 2, this.y - 20);
 		
 	}
 	this.solved = function() {
