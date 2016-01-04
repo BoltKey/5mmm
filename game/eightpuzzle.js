@@ -8,6 +8,8 @@ function EightPuzzle() {
 	this.effect = 0;
 	this.mult = 1;
 	this.inverted = false;
+	this.earned = 0;
+	this.lastReward = -1;
 	
 	this.doMove = function(direction) {
 		// 0 left, 1 up, 2 right, 3 down 
@@ -39,6 +41,10 @@ function EightPuzzle() {
 		if (this.solved()) {
 			this.effect = 100;
 			resources.black += this.reward * this.mult;
+			this.earned += this.reward * this.mult;
+			achs.idAward(22);
+			this.lastReward = Date.now();
+			checkMulti();
 			this.newSet();
 		}
 	}

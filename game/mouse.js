@@ -18,6 +18,7 @@ function click() {
 		if (isMouseIn(cm.drawSkip)) {
 			cm.skip();
 		}
+		mouseUsed = true;
 	}
 }
 

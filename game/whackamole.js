@@ -7,7 +7,9 @@ function Whackamole() {
 	this.w = 200;
 	this.mlg = 0;
 	this.mult = 1;
-	texts = [];
+	this.consPerf = 0;
+	this.earned = 0;
+	this.lastReward = -1;
 	this.target = this.target = [5 + Math.floor(Math.random() * (this.w - 10)), 5 + Math.floor(Math.random() * (this.h - 10))];
 	this.click = function(x, y) {
 		change = 15 - Math.floor(Math.pow((Math.abs(x - this.target[0]) + Math.abs(y - this.target[1])), 1.2));
@@ -18,26 +20,36 @@ function Whackamole() {
 			text = "PERFECT!!!";
 			color += "0,10,100,";
 			vp += this.mlg * 5;
-		}
-		else if (change > 9) {
-			text = "Excellent!!";
-			color += "255,255,20,";
-		}
-		else if (change > 5) {
-			text = "great!";
-			color += "120,255,40,";
-		}
-		else if (change > 0) {
-			text = "good";
-			color += "30,120,180,";
+			achs.idAward(21);
+			++this.consPerf;
+			if (this.consPerf >= 5) 
+				achs.idAward(17);
 		}
 		else {
-			text = "miss";
-			color += "255,10,50,";
+			this.consPerf = 0;
+			if (change > 9) {
+				text = "Excellent!!";
+				color += "255,255,20,";
+			}
+			else if (change > 5) {
+				text = "great!";
+				color += "120,255,40,";
+			}
+			else if (change > 0) {
+				text = "good";
+				color += "30,120,180,";
+			}
+			else {
+				text = "miss";
+				color += "255,10,50,";
+			}
 		}
+		this.lastReward = Date.now();
+		checkMulti();
 		texts.push(new floatText(text, this.x + x, this.y + y, color));
 		texts.push(new floatText((change > 0 ? "+" : "") + change * this.mult, this.x + this.w / 2, this.y - 20));
 		resources.blue += Math.ceil(change * this.mult);
+		this.earned += Math.ceil(change * this.mult);
 		this.target = [5 + Math.floor(Math.random() * (this.w - 10)), 5 + Math.floor(Math.random() * (this.h - 10))];
 	}
 	

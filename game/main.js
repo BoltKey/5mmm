@@ -7,7 +7,9 @@ var divPos;
 var lastDivPos;
 var keysDown;
 var lastkd;
+var keybUsed;
 var mouseDown;
+var mouseUsed;
 var lastmd;
 var resources = {red: 0, green: 0, blue: 0, black: 0};
 var production = {red: 0, green: 0, blue: 0, black: 0};
@@ -76,7 +78,7 @@ function main() {
 	
 	//objects
 	achs = new Achievements();
-	
+	achs.idAward(4);
 	mainloop();
 }
 
@@ -91,6 +93,8 @@ function start() {
 	ep = new EightPuzzle();
 	ep.newSet();
 	
+	
+	
 	resources = {red: 0, green: 0, blue: 0, black: 0};
 	production = {red: 0, green: 0, blue: 0, black: 0};
 	
@@ -99,6 +103,8 @@ function start() {
 	cm.newSet(false);
 
 	inplay = true;
+	mouseUsed = false;
+	keybUsed = false;
 	vp = 0;
 	vpps = 0;
 	startTime = Date.now();
@@ -107,15 +113,60 @@ function start() {
 
 function endGame() {
 	inplay = false;
+	if (vp >= 100) {
+		achs.idAward(0);
+		if (vp >= 300) {
+			achs.idAward(1);
+			if (vp >= 700) {
+				achs.idAward(2);
+				if (vp >= 2000) {
+					achs.idAward(3);
+				}
+			}
+		}
+	}
+	
+	if (vp >= 200) {
+		if (cm.bought.length <= 3) 
+			achs.idAward(18);
+		if (!mouseUsed)
+			achs.idAward(15);
+		if (!keybUsed)
+			achs.idAward(16);
+		if (gamesUsed() === 1) 
+			achs.idAward(14);
+	}
+	else if (vp < 0) {
+		achs.award(7);
+	}
 	navigateMenu(5);
 	showResult = true;
 	
 }
-
+function gamesUsed() {
+	var ret = 0;
+	for (a of [wam, dm, typer, ep]) {
+		if (a.earned > 0)
+			++ret;
+	}
+	return ret;
+}
+function checkMulti() {
+	for (m of [wam, ep, dm, typer]) {
+		if (m.lastReward + 2000 < Date.now()) 
+			return false;
+	}
+	achs.idAward(13);
+	return true;
+}
 function income() {
+	var tot = 0;
 	for (k of COLORS) {
 		resources[k] += production[k];
+		tot += resources[k];
 	}
+	if (tot >= 10000) 
+		achs.idAward(10);
 	vp += vpps;
 }
 window.onload = main;

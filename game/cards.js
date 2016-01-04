@@ -13,7 +13,7 @@ function CardManager() {
 	this.pool = [
 		//{name: "Free stuff!!!", text: ["Here, take some", "resources at cost", "of vp"], bg: "#ccffcc", cost: {red: -25, green: -25, blue: -25, black: -25}, vp: -5, f: function() {}},
 		{name: "Flash cards", text: ["Get +5", "green production"], bg: "#ccffcc", cost: {red: 50, green: 0, blue: 200, black: 0}, vp: 2, f: function() {production.green += 5}},
-		{name: "Aimbot", text: ["Get +20", "blue production"], bg: "#ccccff", cost: {red: 200, green: 200, blue: 300, black: 100}, vp: 1, f: function() {production.blue += 20}},
+		//{name: "Aimbot", text: ["Get +20", "blue production"], bg: "#ccccff", cost: {red: 200, green: 200, blue: 300, black: 100}, vp: 1, f: function() {production.blue += 20}},
 		{name: "Thunder style", text: ["Get +1", "red production"], bg: "#ffd2d2", cost: {red: 0, green: 0, blue: 50, black: 0}, vp: 1, f: function() {production.red += 1}},
 		{name: "Autoclicker", text: ["Get +1", "blue production"], bg: "#d2d2ff", cost: {red: 50, green: 0, blue: 0, black: 0}, vp: 1, f: function() {production.blue += 1}},
 		{name: "Slidy sim", text: ["Get +2", "black production"], bg: "#eeeeee", cost: {red: 60, green: 0, blue: 60, black: 0}, vp: 2, f: function() {production.black += 2}},
@@ -23,6 +23,7 @@ function CardManager() {
 		{name: "Mega factory", text: ["Get +15", "to production", "of every color"], bg: "#009999", cost: {red: 700, green: 700, blue: 1800, black: 400}, vp: 30, f: function() {for (a of COLORS) {production[a] += 15}}},
 		{name: "Mini factory", text: ["Get +3", "to production", "of every color"], bg: "#33aaaa", cost: {red: 160, green: 160, blue: 400, black: 100}, vp: 10, f: function() {for (a of COLORS) {production[a] += 3}}},
 		{name: "Hack-a-mole", text: ["Get +10", "blue production"], bg: "#bbbbff", cost: {red: 450, green: 0, blue: 0, black: 0}, vp: 5, f: function() {production.blue += 10}},
+		{name: "Speech to text", text: ["Get +10", "red production"], bg: "#ffbbbb", cost: {red: 0, green: 0, blue: 450, black: 0}, vp: 5, f: function() {production.blue += 10}},
 		{name: "Charity", text: [], bg: "#ffffa9", cost: {red: 300, green: 300, blue: 300, black: 300}, vp: 200, f: function() {}},
 		{name: "Tighten tiles", text: ["Increase black", "reward multiplier", "by 0.5"], bg: "#667766", cost: {red: 25, green: 350, blue: 25, black: 100}, vp: 4, f: function() {ep.mult += 0.5;}},
 		{name: "Click! Faster!!", text: ["Increase blue", "reward multiplier", "by 0.5"], bg: "#7777ee", cost: {red: 25, green: 350, blue: 100, black: 25}, vp: 4, f: function() {wam.mult += 0.5;}},
@@ -71,9 +72,15 @@ function CardManager() {
 		this.lastbought = -1;
 		this.newSet();
 		this.effect = 100;
-		++this.consecutiveSkips;
+		if (++this.consecutiveSkips >= 10) {
+			achs.idAward(9);
+		};
 	}
 	this.buy = function(id) {
+		if (this.pool[this.selection[id]].name === "Landmark") {
+			achs.idAward(11);
+		}
+		achs.idAward(19);
 		this.consecutiveSkips = 0;
 		if (id >= 0 && id < 3) {
 			c = this.pool[this.selection[id]];
@@ -89,7 +96,13 @@ function CardManager() {
 				this.effect = 100;
 				this.bought.sort(function(a, b){return a-b}); // uglyyyyy... I don't give a fuck
 				this.newSet(false);
+				if (this.bought.length >= 20) {
+					achs.idAward(8);
+				}
 			}
+		}
+		if (resources.red === 0 && resources.green === 0 && resources.blue === 0 && resources.black === 0) {
+			achs.idAward(12);
 		}
 	}
 	this.newSet = function(first) {

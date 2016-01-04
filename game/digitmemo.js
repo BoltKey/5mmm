@@ -9,6 +9,8 @@ function DigitMemo() {
 	this.penalty = 0;
 	this.mult = 1;
 	this.effect = 0;
+	this.earned = 0;
+	this.lastReward = -1;
 	this.newSet = function() {
 		var tempvale, randind;
 		this.currNumb = 0;
@@ -26,7 +28,6 @@ function DigitMemo() {
 		}
 	}
 	this.draw = function() {
-		
 		ctx.strokeStyle = "black";
 		ctx.fillStyle = "rgba(" + (this.effect > 0 ? "0, 255, 0, " : "255, 0, 0, ") + (Math.abs(this.effect) / 100) + ")";
 		ctx.strokeRect(this.x - 3, this.y - 3, this.w + 10, this.w + 10);
@@ -62,6 +63,10 @@ function DigitMemo() {
 				this.revealed[index] = true;
 				if (this.currNumb === 9) {
 					resources.green += this.reward * this.mult;
+					this.earned += this.reawrd * this.mult;
+					this.lastReward = Date.now();
+					checkMulti();
+					achs.idAward(23);
 					this.effect = 100;
 					this.newSet();
 				}
@@ -75,6 +80,7 @@ function DigitMemo() {
 				}
 				this.revealed[index] = true;
 				resources.green -= this.penalty;
+				this.earned -= this.penalty;
 			}
 		}
 	}
