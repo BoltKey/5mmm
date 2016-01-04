@@ -46,7 +46,7 @@ function DigitMemo() {
 			}
 		}
 		ctx.fillStyle = "green";
-		ctx.fillText(resources.green + " (" + this.mult + "x)", this.x + this.w / 2, this.y - 5);
+		ctx.fillText(resources.green + " (" + this.mult + "x)", this.x + this.w / 2, this.y - 10);
 		ctx.fillText("Use numpad or mouse", this.x + this.w / 2, this.y + this.w + 25);
 	}
 	this.attempt = function(id) {

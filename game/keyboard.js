@@ -19,9 +19,8 @@ function keyPress(k) {
 			typer.attempt(typer.alphabet[k - 65]);
 		}
 	}
-	if (k >= 97 && k <= 105) {
+	if (k >= 97 && k <= 105) 
 		dm.attempt(k - 96);
-	}
 	if (k >= 37 && k <= 40) {
 		if (ep.inverted) {
 			ep.doMove(k - 37);
@@ -31,9 +30,15 @@ function keyPress(k) {
 			ep.doMove(a[k] - 37);
 		}
 	}
-	if (k === 35) {
+	if (k === 35)
 		start();
-	}
+	if (k === 46)
+		cm.skip();
+	if (k === 27)
+		if (inplay)
+			endGame();
+		else
+			navigateMenu(0);
 }
 function keyHold(k) {
 	

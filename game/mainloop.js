@@ -23,6 +23,7 @@ function mainloop() {
 			cl = false;
 		}
 		checkkeys();
+		achs.check();
 		
 		if (inplay) {
 			updateSeconds();

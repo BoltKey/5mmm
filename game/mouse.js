@@ -1,18 +1,23 @@
 function click() {
-	if (showResult && !inplay) {
+	/*if (showResult && !inplay) {
 		start();
-	}
-	if (isMouseIn(wam)) {
-		wam.click(divPos.x - wam.x, divPos.y - wam.y)
-	}
-	if (isMouseIn(dm)) {
-		var x = Math.floor((divPos.y - dm.y) / (dm.w / 3));
-		var y = Math.floor((divPos.x - dm.x) / (dm.w / 3));
-		console.log("in " + x + y);
-		dm.attempt(3 * (2 - (Math.floor((divPos.y - dm.y) / (dm.w / 3)))) + Math.floor((divPos.x - dm.x) / (dm.w / 3) + 1))
-	}
-	if (isMouseIn(cm)) {
-		cm.buy(Math.floor((divPos.x - cm.x) / (cm.cardWidth + cm.cardSpacing)));
+	}*/
+	if (inplay) {
+		if (isMouseIn(wam)) {
+			wam.click(divPos.x - wam.x, divPos.y - wam.y)
+		}
+		if (isMouseIn(dm)) {
+			var x = Math.floor((divPos.y - dm.y) / (dm.w / 3));
+			var y = Math.floor((divPos.x - dm.x) / (dm.w / 3));
+			console.log("in " + x + y);
+			dm.attempt(3 * (2 - (Math.floor((divPos.y - dm.y) / (dm.w / 3)))) + Math.floor((divPos.x - dm.x) / (dm.w / 3) + 1))
+		}
+		if (isMouseIn(cm)) {
+			cm.buy(Math.floor((divPos.x - cm.x) / (cm.cardWidth + cm.cardSpacing)));
+		}
+		if (isMouseIn(cm.drawSkip)) {
+			cm.skip();
+		}
 	}
 }
 

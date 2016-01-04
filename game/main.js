@@ -20,6 +20,8 @@ var startTime;
 var COLORS = ["red", "green", "blue", "black"];
 var inplay = false;
 var showResult = false;
+
+var currMenu = 0;
 function main() {
 	
 	
@@ -68,7 +70,12 @@ function main() {
 	fpshistory = [];
 	interval = 1000/fps;
 	
-	start();
+	createButtons();
+	navigateMenu(0);
+	//start();
+	
+	//objects
+	achs = new Achievements();
 	
 	mainloop();
 }
@@ -100,7 +107,9 @@ function start() {
 
 function endGame() {
 	inplay = false;
+	navigateMenu(5);
 	showResult = true;
+	
 }
 
 function income() {
