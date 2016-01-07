@@ -2,20 +2,20 @@ function click() {
 	/*if (showResult && !inplay) {
 		start();
 	}*/
-	if (inplay) {
-		if (isMouseIn(wam)) {
+	if (inplay || inTrainer) {
+		if ((!inTrainer || inTrainer === 2) && isMouseIn(wam)) {
 			wam.click(divPos.x - wam.x, divPos.y - wam.y)
 		}
-		if (isMouseIn(dm)) {
+		if ((!inTrainer || inTrainer === 4) && isMouseIn(dm)) {
 			var x = Math.floor((divPos.y - dm.y) / (dm.w / 3));
 			var y = Math.floor((divPos.x - dm.x) / (dm.w / 3));
 			console.log("in " + x + y);
 			dm.attempt(3 * (2 - (Math.floor((divPos.y - dm.y) / (dm.w / 3)))) + Math.floor((divPos.x - dm.x) / (dm.w / 3) + 1))
 		}
-		if (isMouseIn(cm)) {
+		if (inplay && isMouseIn(cm)) {
 			cm.buy(Math.floor((divPos.x - cm.x) / (cm.cardWidth + cm.cardSpacing)));
 		}
-		if (isMouseIn(cm.drawSkip)) {
+		if (inplay && isMouseIn(cm.drawSkip)) {
 			cm.skip();
 		}
 		mouseUsed = true;

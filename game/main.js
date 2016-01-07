@@ -3,6 +3,8 @@ var cl;
 var typer;
 var ep;
 var dm;
+var trainerGame;
+var inTrainer;
 var divPos;
 var lastDivPos;
 var keysDown;
@@ -11,6 +13,7 @@ var keybUsed;
 var mouseDown;
 var mouseUsed;
 var lastmd;
+var inTrainer = 0;
 var resources = {red: 0, green: 0, blue: 0, black: 0};
 var production = {red: 0, green: 0, blue: 0, black: 0};
 var texts = [];
@@ -111,6 +114,19 @@ function start() {
 	seconds = 0;
 }
 
+function toTrainer(type) {
+	inTrainer = type;
+	trainerGame = [0, new Typer(), new Whackamole(), new EightPuzzle(), new DigitMemo()][type];
+	switch(type) {
+		case 1: typer = trainerGame; break;
+		case 2: wam = trainerGame; break;
+		case 3: ep = trainerGame; break;
+		case 4: dm = trainerGame; break;
+	}
+	if (type > 2)
+		trainerGame.newSet();
+}
+
 function endGame() {
 	inplay = false;
 	if (vp >= 100) {
@@ -149,7 +165,19 @@ function gamesUsed() {
 		if (a.earned > 0)
 			++ret;
 	}
+	
 	return ret;
+}
+function escBack() {
+	if (inplay) {
+		endGame();
+	}
+	else {
+		if (inTrainer) {
+			inTrainer = false;
+		}
+		navigateMenu(0);
+	}
 }
 function checkMulti() {
 	for (m of [wam, ep, dm, typer]) {
@@ -168,5 +196,23 @@ function income() {
 	if (tot >= 10000) 
 		achs.idAward(10);
 	vp += vpps;
+}
+function avg(results, n, plain) {
+	if (typeof(plain) === "undefined") plain = true;
+	var retval = "";
+	var temp = [];
+	for (var i = 0; i < n; ++i) {
+		temp.push(results[results.length - (i + 1)]);
+	}
+	var sorted = JSON.parse(JSON.stringify(temp)).sort(function(a, b) {return a - b} );
+	var toavg = 0;
+	for (var i = 1; i < n - 1; ++i) {
+		toavg += sorted[i];
+	}
+	var avg = Math.round((toavg / (n-2)) * 100) / 100;
+	if (plain) {
+		return avg;
+	}
+	return retval += "Avg" + n + ": " + niceTime(avg) + " ";
 }
 window.onload = main;

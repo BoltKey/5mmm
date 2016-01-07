@@ -44,4 +44,7 @@ function updateSeconds() {
 		}
 		income();
 	}
+	if (gamesUsed() === 4) {
+		achs.idAward(20);
+	}
 }

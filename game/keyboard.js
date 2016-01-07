@@ -35,10 +35,8 @@ function keyPress(k) {
 	if (k === 46)
 		cm.skip();
 	if (k === 27)
-		if (inplay)
-			endGame();
-		else
-			navigateMenu(0);
+		escBack();
+		
 }
 function keyHold(k) {
 	

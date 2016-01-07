@@ -20,6 +20,7 @@ function Typer() {
 		ctx.font = "20px Arial";
 		this.offset *= 0.98;
 		ctx.strokeRect(this.x + this.offset + 8, this.y - 20, 20, 24); 
+		ctx.strokeRect(this.x - 3, this.y - 40, this.w + 20, 50); 
 		for (var i = 0; i < this.amt; ++i) {
 			ctx.fillStyle = "rgba(0, 0, 0, " + ((1 / this.amt) * i + (1 / this.amt)) + ")";
 			ctx.fillText(this.letters[i], this.x + (this.w / this.amt) * (this.amt - i) + this.offset, this.y);
@@ -39,7 +40,8 @@ function Typer() {
 			if (this.streak >= 10) 
 				achs.idAward(24);
 			this.lastReward = Date.now();
-			checkMulti();
+			if (inplay)
+				checkMulti();
 		}
 		else {
 			resources.red -= this.penalty;
