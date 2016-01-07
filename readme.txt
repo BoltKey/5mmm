@@ -1,10 +1,7 @@
-3x3, correct order of digits
-5x5, find missing letter
-whack-a-mole
-8 puzzle (slidy)
+Hi! This is 5 minute minigame mayhem, a game about fast fingers and swift macromanagement skills.
 
-4 resources
-
-cards, 3 to choose from. Random each time (with time better etc.)
-
-color coded - production (green), minigames (red), victory points (silver), special (dark gray), trade (yellow)
+TODO: 
+ - sounds
+ - card collection system
+ - balancing
+ - better graphics
