@@ -3,6 +3,7 @@ var cl;
 var typer;
 var ep;
 var dm;
+var cs;
 var trainerGame;
 var inTrainer;
 var divPos;
@@ -34,6 +35,9 @@ function main() {
 	canvas = $("#game")[0];
 	ctx = canvas.getContext("2d");
 	ctx.fillText("Loading... If you can read this, something went wrong probably", 10, 10);
+	
+	//card shop
+	cs = new cardShop();
 	
 	//mouse
 	var offset = $("#game").offset();

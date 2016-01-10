@@ -12,7 +12,7 @@ function checkkeys() {
 function keyPress(k) {
 	keybUsed = true;
 	if (k >= 65 && k <= 90) {
-		if (keysDown.indexOf(16) > -1) {
+		if (keysDown.indexOf(16) > -1 && k >= 74 && k <= 76) {
 			cm.buy(k - 74);
 		}
 		else {
